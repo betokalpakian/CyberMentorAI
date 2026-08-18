@@ -6,7 +6,7 @@ usuario = {
     "profissao": "Designer"
 }
 
-caminho = "exercicios/modulo06/usuario.json"
+caminho = "mini_projetos/modulo06/usuario.json"
 
 with open(caminho, "w", encoding="utf-8") as arquivo:
     json.dump(
