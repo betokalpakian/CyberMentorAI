@@ -8,5 +8,15 @@
         "nome": "Ana",
         "idade": 30,
         "profissao": "Analista"
+    },
+    {
+        "nome": "ana",
+        "idade": 20,
+        "profissao": "enfermeira"
+    },
+    {
+        "nome": "beto",
+        "idade": 10,
+        "profissao": "estudante"
     }
 ]
