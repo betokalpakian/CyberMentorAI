@@ -26,41 +26,12 @@ def salvar_usuarios(usuarios):
         )
 
 
-def obter_texto(mensagem):
-    while True:
-        valor = input(mensagem).strip()
+def buscar_usuario(usuarios, nome):
+    for usuario in usuarios:
+        if usuario["nome"].lower() == nome.lower():
+            return usuario
 
-        if valor:
-            return valor
-
-        print("Este campo não pode ficar vazio.")
-
-
-def obter_idade():
-    while True:
-        try:
-            idade = int(input("Idade: "))
-
-            if 0 <= idade <= 120:
-                return idade
-
-            print("A idade deve estar entre 0 e 120.")
-
-        except ValueError:
-            print("Digite uma idade válida.")
-
-
-def cadastrar_usuario(usuarios):
-    usuario = {
-        "nome": obter_texto("Nome: "),
-        "idade": obter_idade(),
-        "profissao": obter_texto("Profissão: "),
-    }
-
-    usuarios.append(usuario)
-    salvar_usuarios(usuarios)
-
-    print("Usuário cadastrado com sucesso!")
+    return None
 
 
 def listar_usuarios(usuarios):
@@ -76,15 +47,91 @@ def listar_usuarios(usuarios):
         )
 
 
+def cadastrar_usuario(usuarios):
+    nome = input("Nome: ").strip()
+
+    if not nome:
+        print("Nome inválido.")
+        return
+
+    if buscar_usuario(usuarios, nome):
+        print("Esse usuário já existe.")
+        return
+
+    try:
+        idade = int(input("Idade: "))
+    except ValueError:
+        print("Idade inválida.")
+        return
+
+    profissao = input("Profissão: ").strip()
+
+    if not profissao:
+        print("Profissão inválida.")
+        return
+
+    usuario = {
+        "nome": nome,
+        "idade": idade,
+        "profissao": profissao,
+    }
+
+    usuarios.append(usuario)
+    salvar_usuarios(usuarios)
+
+    print("Usuário cadastrado com sucesso!")
+
+
+def atualizar_profissao(usuarios):
+    nome = input("Nome do usuário: ").strip()
+
+    usuario = buscar_usuario(usuarios, nome)
+
+    if usuario is None:
+        print("Usuário não encontrado.")
+        return
+
+    profissao = input("Nova profissão: ").strip()
+
+    if not profissao:
+        print("Profissão inválida.")
+        return
+
+    usuario["profissao"] = profissao
+
+    salvar_usuarios(usuarios)
+
+    print("Profissão atualizada!")
+
+
+def excluir_usuario(usuarios):
+    nome = input("Nome do usuário: ").strip()
+
+    usuario = buscar_usuario(usuarios, nome)
+
+    if usuario is None:
+        print("Usuário não encontrado.")
+        return
+
+    usuarios.remove(usuario)
+    salvar_usuarios(usuarios)
+
+    print("Usuário excluído!")
+
+
 def main():
     usuarios = carregar_usuarios()
 
     while True:
-        print("\n1 - Listar usuários")
+        print("\n===== SISTEMA DE USUÁRIOS =====")
+        print("1 - Listar usuários")
         print("2 - Cadastrar usuário")
-        print("3 - Sair")
+        print("3 - Buscar usuário")
+        print("4 - Atualizar profissão")
+        print("5 - Excluir usuário")
+        print("6 - Sair")
 
-        opcao = input("Escolha: ").strip()
+        opcao = input("Escolha uma opção: ").strip()
 
         if opcao == "1":
             listar_usuarios(usuarios)
@@ -93,6 +140,21 @@ def main():
             cadastrar_usuario(usuarios)
 
         elif opcao == "3":
+            nome = input("Nome: ").strip()
+            usuario = buscar_usuario(usuarios, nome)
+
+            if usuario:
+                print(usuario)
+            else:
+                print("Usuário não encontrado.")
+
+        elif opcao == "4":
+            atualizar_profissao(usuarios)
+
+        elif opcao == "5":
+            excluir_usuario(usuarios)
+
+        elif opcao == "6":
             print("Programa encerrado.")
             break
 

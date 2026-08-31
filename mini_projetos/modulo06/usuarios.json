@@ -10,7 +10,7 @@
         "profissao": "Analista"
     },
     {
-        "nome": "ana",
+        "nome": "beatriz",
         "idade": 20,
         "profissao": "enfermeira"
     },
@@ -18,5 +18,10 @@
         "nome": "beto",
         "idade": 10,
         "profissao": "estudante"
+    },
+    {
+        "nome": "Aracy",
+        "idade": 30,
+        "profissao": "camareira"
     }
 ]
